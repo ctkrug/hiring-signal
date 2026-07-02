@@ -47,7 +47,7 @@ function applyFilters(): void {
 
   resultsList.innerHTML = filtered.length
     ? filtered.map(renderPostingCard).join("")
-    : `<p class="results__empty">&gt; no postings match your filters_</p>`;
+    : `<p class="results__empty">&gt; no postings match your filters<span class="cursor">_</span></p>`;
 
   setStatus(
     `> showing ${filtered.length} of ${state.active.postingCount} postings for ${state.active.monthLabel}_`,
