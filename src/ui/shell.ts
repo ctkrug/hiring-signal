@@ -7,7 +7,7 @@
 export function renderShell(): string {
   return `
     <header class="app-header">
-      <span class="wordmark">Hiring Signal<span class="cursor">_</span></span>
+      <span class="wordmark">Grepwork<span class="cursor">_</span></span>
       <div class="app-header__controls">
         <label class="visually-hidden" for="month-picker">Month</label>
         <select id="month-picker" class="select" aria-label="Month"></select>
