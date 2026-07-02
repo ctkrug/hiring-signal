@@ -311,21 +311,24 @@ a {
     flex-direction: column;
   }
 
+  /*
+   * A single row of all three filter groups overflowed ~2800px with no
+   * scroll affordance, hiding Stack/Seniority entirely off-screen. Stacking
+   * groups vertically keeps every group's title visible; only each group's
+   * own chip row scrolls horizontally.
+   */
   .filter-rail {
     flex: 0 0 auto;
     width: 100%;
     position: static;
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: column;
     padding: var(--space-3);
-  }
-
-  .filter-group {
-    flex: 0 0 auto;
   }
 
   .filter-group__options {
     flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: var(--space-1);
   }
 }
 
