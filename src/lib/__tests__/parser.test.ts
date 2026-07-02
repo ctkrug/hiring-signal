@@ -48,7 +48,19 @@ describe("parseComment", () => {
 describe("parseThread", () => {
   it("only parses top-level postings, skipping replies and too-short comments", () => {
     const postings = parseThread(comments, storyId);
-    expect(postings).toHaveLength(2);
-    expect(postings.map((p) => p.commentId)).toEqual([40000001, 40000002]);
+    expect(postings).toHaveLength(3);
+    expect(postings.map((p) => p.commentId)).toEqual([40000001, 40000002, 40000005]);
+  });
+});
+
+describe("unparsed flag", () => {
+  it("is false for a well-formed Company | Location posting", () => {
+    expect(parseComment(comments[0]!).unparsed).toBe(false);
+  });
+
+  it("is true for a freeform posting with no pipe-delimited opening line", () => {
+    const posting = parseComment(comments[4]!);
+    expect(posting.unparsed).toBe(true);
+    expect(posting.location).toBeNull();
   });
 });
