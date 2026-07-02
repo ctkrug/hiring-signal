@@ -3,22 +3,10 @@ import path from "node:path";
 import { fetchThreadComments, findRecentHiringThreads } from "../src/lib/hn";
 import { formatMonthLabel } from "../src/lib/months";
 import { parseThread } from "../src/lib/parser";
-import type { JobPosting } from "../src/lib/types";
+import type { ThreadData, ThreadIndexEntry } from "../src/lib/types";
 
 const OUT_DIR = path.join(process.cwd(), "public", "data");
 const THREAD_LIMIT = 6;
-
-interface ThreadIndexEntry {
-  storyId: number;
-  title: string;
-  createdAt: string;
-  monthLabel: string;
-  postingCount: number;
-}
-
-interface ThreadDataFile extends ThreadIndexEntry {
-  postings: JobPosting[];
-}
 
 /**
  * Fetches and parses the most recent N "Who is hiring" threads into static
@@ -43,7 +31,7 @@ async function main(): Promise<void> {
       const postings = parseThread(comments, thread.storyId);
       const monthLabel = formatMonthLabel(thread.createdAt);
       const entry: ThreadIndexEntry = { ...thread, monthLabel, postingCount: postings.length };
-      const data: ThreadDataFile = { ...entry, postings };
+      const data: ThreadData = { ...entry, postings };
 
       await writeFile(path.join(OUT_DIR, `${thread.storyId}.json`), JSON.stringify(data));
       index.push(entry);
