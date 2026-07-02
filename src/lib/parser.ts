@@ -1,11 +1,46 @@
 import { extractRemote, extractSeniority, extractStack } from "./tags";
 import type { HNComment, JobPosting } from "./types";
 
+/** Corporate suffixes that follow a comma in a company name, not a location's "City, ST". */
+const CORP_SUFFIXES = new Set([
+  "inc",
+  "llc",
+  "corp",
+  "ltd",
+  "co",
+  "llp",
+  "gmbh",
+  "pbc",
+  "plc",
+  "ag",
+  "sa",
+  "srl",
+]);
+
+/**
+ * Heuristic for "this segment names a place, not a company": either it's a
+ * bare remote descriptor, or it ends in a short "City, ST"/"City, Country"
+ * suffix that isn't actually a corporate suffix like "..., Inc.".
+ */
+function looksLikeLocation(segment: string): boolean {
+  const s = segment.trim();
+  if (/\bremote\b/i.test(s)) return true;
+
+  const commaIndex = s.lastIndexOf(",");
+  if (commaIndex === -1) return false;
+
+  const after = s.slice(commaIndex + 1).trim();
+  if (!/^[A-Za-z.]{2,20}$/.test(after)) return false;
+  return !CORP_SUFFIXES.has(after.toLowerCase().replace(/\.$/, ""));
+}
+
 /**
  * Most "Who is hiring" posts open with `Company Name | Location | ...`
- * (pipe- or em-dash-separated). This grabs the first segment as the company
- * name and the second, if it looks like a place, as the location. Posts that
- * don't follow the convention just get `company: null`.
+ * (pipe- or em-dash-separated), but some invert the first two fields to
+ * `Location | Company Name | ...`. This grabs the first segment as the
+ * company name and the second, if it looks like a place, as the location —
+ * swapping them when the first segment looks like a place and the second
+ * doesn't. Posts that don't follow the convention just get `company: null`.
  */
 function extractCompanyAndLocation(text: string): {
   company: string | null;
@@ -18,9 +53,11 @@ function extractCompanyAndLocation(text: string): {
     .filter(Boolean);
 
   if (segments.length === 0) return { company: null, location: null };
+  if (segments.length === 1) return { company: segments[0]!.slice(0, 80), location: null };
 
-  const company = segments[0]?.slice(0, 80) ?? null;
-  const location = segments.length > 1 ? (segments[1]?.slice(0, 80) ?? null) : null;
+  const swapped = looksLikeLocation(segments[0]!) && !looksLikeLocation(segments[1]!);
+  const company = (swapped ? segments[1] : segments[0])!.slice(0, 80);
+  const location = (swapped ? segments[0] : segments[1])!.slice(0, 80);
   return { company, location };
 }
 

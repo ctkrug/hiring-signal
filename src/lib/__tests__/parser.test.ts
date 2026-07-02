@@ -58,6 +58,39 @@ describe("parseThread", () => {
   });
 });
 
+describe("company/location field-order heuristic", () => {
+  const post = (text: string): HNComment => ({
+    id: 1,
+    author: "poster",
+    text,
+    createdAt: "2026-07-01T14:00:00.000Z",
+    parentId: storyId,
+  });
+
+  it("swaps fields when the post leads with Location | Company", () => {
+    const posting = parseComment(
+      post("<p>Berlin, Germany | PixelForge | Remote<p>Hiring a platform engineer."),
+    );
+    expect(posting.company).toBe("PixelForge");
+    expect(posting.location).toBe("Berlin, Germany");
+    expect(posting.unparsed).toBe(false);
+  });
+
+  it("does not swap when the company name itself contains a comma-separated suffix", () => {
+    const posting = parseComment(
+      post("<p>Contoso, Inc. | Austin, TX | Remote<p>Hiring a support engineer."),
+    );
+    expect(posting.company).toBe("Contoso, Inc.");
+    expect(posting.location).toBe("Austin, TX");
+  });
+
+  it("leaves a normal Company | Location order untouched", () => {
+    const posting = parseComment(post("<p>Acme Robotics | Remote (US)<p>Hiring."));
+    expect(posting.company).toBe("Acme Robotics");
+    expect(posting.location).toBe("Remote (US)");
+  });
+});
+
 describe("unparsed flag", () => {
   it("is false for a well-formed Company | Location posting", () => {
     expect(parseComment(comments[0]!).unparsed).toBe(false);
