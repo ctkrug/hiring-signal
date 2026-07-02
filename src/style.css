@@ -543,3 +543,98 @@ a {
     transform: none;
   }
 }
+
+/* Below-the-fold: about + FAQ copy and the portfolio footer. */
+.about {
+  border-top: 1px solid var(--surface-2);
+  padding: var(--space-6) var(--space-5);
+  background: var(--surface-1);
+}
+
+.about__inner {
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.about__title {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--text);
+}
+
+.about h3 {
+  margin: var(--space-5) 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.about p,
+.about li,
+.faq dd {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.about ol {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.about li {
+  margin-bottom: var(--space-2);
+}
+
+.faq {
+  margin: 0;
+}
+
+.faq dt {
+  margin-top: var(--space-4);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.faq dd {
+  margin: var(--space-1) 0 0;
+}
+
+.site-footer {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--surface-2);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.site-footer__mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.site-footer__links a {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-footer__links a:hover {
+  color: var(--accent-support);
+}

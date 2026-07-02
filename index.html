@@ -22,6 +22,82 @@
   </head>
   <body>
     <div id="app"></div>
+
+    <section class="about" aria-labelledby="about-title">
+      <div class="about__inner">
+        <h2 id="about-title" class="about__title">About Grepwork</h2>
+        <p>
+          Every month, the top "Who is hiring?" post on Hacker News collects hundreds of job
+          listings as freeform comments. It is one of the better places to find engineering work
+          with no recruiter spam, but the thread has no search and no filters, so finding roles that
+          fit your stack means reading every comment by hand. Grepwork fetches the six most recent
+          threads, reads each top-level post, and pulls out the company, location, remote type, tech
+          stack, and seniority so you can search and filter a whole month in seconds.
+        </p>
+
+        <h3>How to use it</h3>
+        <ol>
+          <li>Pick a month from the picker in the header to load that thread's postings.</li>
+          <li>
+            Type in the search box to match any word in a posting: company, location, or body.
+          </li>
+          <li>
+            Click the Remote, Stack, and Seniority chips to narrow the list. Stack and seniority are
+            multi-select and combine with the search text.
+          </li>
+          <li>Click a posting to expand the full original Hacker News comment.</li>
+        </ol>
+
+        <h3>Frequently asked questions</h3>
+        <dl class="faq">
+          <dt>Where does the data come from?</dt>
+          <dd>
+            The public Hacker News Algolia Search API. Grepwork reads the monthly "Ask HN: Who is
+            hiring?" threads posted by the whoishiring account and parses their top-level comments.
+            Nothing is scraped.
+          </dd>
+
+          <dt>How current is it?</dt>
+          <dd>
+            The board is rebuilt from the six most recent threads each time the site is deployed, so
+            it tracks the current and recent months.
+          </dd>
+
+          <dt>How are the stack and remote tags decided?</dt>
+          <dd>
+            By transparent keyword and pattern matching over each post, not an opaque model. A post
+            that says "no remote" is classed as onsite, and posts that do not follow the usual
+            "Company | Location" opening are flagged so you know those fields were auto-extracted.
+          </dd>
+
+          <dt>Is it free?</dt>
+          <dd>
+            Yes. Grepwork is a static site with no login and no tracking, and the full source is on
+            GitHub under the MIT license.
+          </dd>
+
+          <dt>Can I see the original post?</dt>
+          <dd>
+            Yes. Click any card to expand the full original comment as it appeared on Hacker News.
+          </dd>
+        </dl>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <span class="site-footer__mark">Grepwork</span>
+        <nav class="site-footer__links" aria-label="Site">
+          <a href="https://github.com/ctkrug/hiring-signal" target="_blank" rel="noopener"
+            >View on GitHub</a
+          >
+          <a href="https://apps.charliekrug.com" target="_blank" rel="noopener"
+            >More by Charlie Krug</a
+          >
+        </nav>
+      </div>
+    </footer>
+
     <script type="module" src="./src/main.ts"></script>
   </body>
 </html>
