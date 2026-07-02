@@ -77,9 +77,13 @@ const STACK_KEYWORDS: Record<string, string> = {
 };
 
 const REMOTE_PATTERNS: Array<{ type: RemoteType; pattern: RegExp }> = [
+  // Checked first: an explicit negation like "no remote" would otherwise
+  // still match the generic /remote/ pattern below and get misclassified
+  // as a remote posting.
+  { type: "onsite", pattern: /\bno remote\b/i },
   { type: "hybrid", pattern: /\bhybrid\b/i },
   { type: "remote", pattern: /\b(remote|remote[- ]first|distributed|work from home|wfh)\b/i },
-  { type: "onsite", pattern: /\b(onsite|on-site|in[- ]office|no remote)\b/i },
+  { type: "onsite", pattern: /\b(onsite|on-site|in[- ]office)\b/i },
 ];
 
 const SENIORITY_KEYWORDS: Record<string, string> = {

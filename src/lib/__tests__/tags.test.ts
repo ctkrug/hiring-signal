@@ -54,6 +54,11 @@ describe("extractRemote", () => {
   it("falls back to unknown when unstated", () => {
     expect(extractRemote("Great team, great mission.")).toBe("unknown");
   });
+
+  it("classifies an explicit 'no remote' negation as onsite, not remote", () => {
+    expect(extractRemote("Onsite only, no remote work permitted.")).toBe("onsite");
+    expect(extractRemote("In-office role. No remote applicants please.")).toBe("onsite");
+  });
 });
 
 describe("extractSeniority", () => {
