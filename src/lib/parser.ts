@@ -53,6 +53,9 @@ export function parseComment(comment: HNComment): JobPosting {
     remote: extractRemote(text),
     stack: extractStack(text),
     seniority: extractSeniority(text),
+    // No company means the opening line didn't follow the `Company | Location`
+    // convention at all — company/location are guesses at best, not facts.
+    unparsed: company === null,
     raw: text,
   };
 }
