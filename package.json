@@ -1,0 +1,26 @@
+{
+  "name": "hiring-signal",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Turns each month's HN 'Who is hiring' thread into a searchable, filterable job board.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --check ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.6",
+    "vitest": "^2.0.5"
+  }
+}
