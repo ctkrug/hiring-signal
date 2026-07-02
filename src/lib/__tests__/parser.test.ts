@@ -89,6 +89,14 @@ describe("company/location field-order heuristic", () => {
     expect(posting.company).toBe("Acme Robotics");
     expect(posting.location).toBe("Remote (US)");
   });
+
+  it("truncates a runaway company/location segment to 80 characters", () => {
+    const longCompany = "A".repeat(120);
+    const longLocation = "B".repeat(120);
+    const posting = parseComment(post(`<p>${longCompany} | ${longLocation}<p>Hiring.`));
+    expect(posting.company).toHaveLength(80);
+    expect(posting.location).toHaveLength(80);
+  });
 });
 
 describe("unparsed flag", () => {
