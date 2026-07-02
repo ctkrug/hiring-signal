@@ -1,0 +1,64 @@
+/* Design tokens — see docs/DESIGN.md for the full rationale. */
+:root {
+  --bg: #0d1117;
+  --surface-1: #151b23;
+  --surface-2: #1c232c;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #ff6600;
+  --accent-support: #58a6ff;
+  --success: #3fb950;
+  --danger: #f85149;
+
+  --font-display: "JetBrains Mono", ui-monospace, monospace;
+  --font-ui: "Inter", system-ui, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+
+  --radius: 6px;
+  --transition-fast: 120ms ease-out;
+  --transition: 150ms ease-out;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent-support);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
