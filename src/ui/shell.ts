@@ -9,7 +9,7 @@ export function renderShell(): string {
     <header class="app-header">
       <span class="wordmark">Hiring Signal<span class="cursor">_</span></span>
       <div class="app-header__controls">
-        <label class="field-label" for="month-picker">Month</label>
+        <label class="visually-hidden" for="month-picker">Month</label>
         <select id="month-picker" class="select" aria-label="Month"></select>
         <div class="search">
           <span class="search__prompt" aria-hidden="true">$</span>
