@@ -10,6 +10,13 @@ export interface HNComment {
 
 export type RemoteType = "remote" | "onsite" | "hybrid" | "unknown";
 
+/** A monthly "Who is hiring?" thread, as surfaced by the archive/month picker. */
+export interface HiringThread {
+  storyId: number;
+  title: string;
+  createdAt: string;
+}
+
 /** A job posting extracted from one top-level "Who is hiring" comment. */
 export interface JobPosting {
   commentId: number;
