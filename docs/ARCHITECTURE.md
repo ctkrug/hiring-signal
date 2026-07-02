@@ -57,9 +57,10 @@ results containers) as an HTML string, rendered once into `#app`.
 **`src/main.ts`** — the only DOM-wiring module. Fetches `data/index.json` and the active
 thread's JSON, holds `AppState` (index, active thread, `FilterState`), and wires the month
 select / search input / remote toggle / stack+seniority chips to `applyFilters()`, which
-re-runs `filterPostings` and re-renders `#results-list`. Not unit tested (no jsdom in this
-project) — verify UI changes by running `npm run dev` or `npm run build && npm run preview`
-and checking in a browser.
+re-runs `filterPostings` and re-renders `#results-list`. Covered by
+`src/__tests__/main.test.ts` (jsdom, mocked `fetch`) for wiring/state behavior — still verify
+visual/layout changes by running `npm run dev` or `npm run build && npm run preview` in a
+real browser, since jsdom doesn't render CSS.
 
 **`scripts/build-data.ts`** — Node/tsx script, run via `npm run build-data` (wired into
 `npm run build` as a prebuild step). Fetches the 6 most recent threads, parses each, and
@@ -78,6 +79,8 @@ reference `var(--token)` rather than hardcoded values. No CSS framework or compo
   if you want real data locally (the dev server doesn't run it automatically).
 - `npm run build` — `tsc --noEmit` (type-check) → `build-data` (fetch+parse into
   `public/data/`) → `vite build` (outputs `dist/`, relative asset paths for subpath hosting).
-- `npm test` — Vitest, `src/lib/**/*.test.ts`. Covers everything under `src/lib/`; UI wiring
-  in `main.ts` is verified manually in a browser, not by these tests.
+- `npm test` — Vitest, `src/**/*.test.ts`. Covers everything under `src/lib/` (node
+  environment) plus `main.ts`'s wiring/state behavior (`src/__tests__/main.test.ts`, jsdom
+  environment via a per-file `@vitest-environment` pragma) — visual/layout correctness is
+  still a manual browser check, since jsdom doesn't render CSS.
 - `npm run lint` / `npm run format` — ESLint / Prettier check.

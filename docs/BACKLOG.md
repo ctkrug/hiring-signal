@@ -40,11 +40,17 @@ full spec. Check items off as they land.
       ahead of publishing to `apps.charliekrug.com/hiring-signal`
 - [x] Expand the README with real usage/screenshots once the board is functional
 
-## Epic 5 — Not yet started (next run)
+## Epic 5 — QA hardening
 
-- [ ] Company/location extraction still mis-orders fields on posts that lead with
+- [x] Company/location extraction still mis-orders fields on posts that lead with
       `Location | Company | ...` instead of `Company | Location | ...` (e.g. swapped output
-      seen on real July 2026 data) — needs a heuristic beyond "first two pipe segments"
-- [ ] No screenshots in the README yet
-- [ ] No automated visual regression coverage for `src/main.ts`/`src/ui` (verified manually
-      via Playwright this run; consider a lightweight jsdom or Playwright test suite)
+      seen on real July 2026 data) — fixed with a `looksLikeLocation` heuristic (bare
+      "remote", or a trailing "City, ST"/"City, Country" suffix that isn't a corporate
+      suffix like "Inc.") that swaps the first two segments when warranted
+- [x] No screenshots in the README yet — added desktop + mobile screenshots
+- [x] No automated visual regression coverage for `src/main.ts`/`src/ui` — added a
+      jsdom-backed integration suite (`src/__tests__/main.test.ts`) covering wiring/state;
+      visual/layout correctness is still a manual browser check
+- [x] Mobile filter rail (<=768px) overflowed all three filter groups into one ~2800px
+      horizontal-scroll row with no scroll affordance, hiding Stack/Seniority off-screen —
+      fixed by stacking groups vertically with each group's own scrollable chip row
