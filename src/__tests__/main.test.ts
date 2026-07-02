@@ -205,4 +205,13 @@ describe("main.ts app wiring", () => {
       "failed to load this month's postings",
     );
   });
+
+  it("shows a designed error status when the archive index is an empty array", async () => {
+    mockFetch({ "data/index.json": [] });
+    await loadApp();
+
+    expect(document.querySelector("#results-status")?.textContent).toContain(
+      "failed to load the archive",
+    );
+  });
 });
