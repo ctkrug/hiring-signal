@@ -18,6 +18,12 @@ export interface JobPosting {
   remote: RemoteType;
   stack: string[];
   seniority: string[];
+  /**
+   * True when the posting didn't follow the `Company | Location | ...`
+   * convention closely enough to trust `company`/`location` — the UI should
+   * flag these rather than presenting a guess as fact.
+   */
+  unparsed: boolean;
   /** Original comment text (HTML stripped), kept for display and re-extraction. */
   raw: string;
 }
