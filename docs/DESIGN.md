@@ -2,7 +2,7 @@
 
 ## Aesthetic direction
 
-**Terminal-mono, HN-flavored.** Hiring Signal looks like a well-kept terminal built for
+**Terminal-mono, HN-flavored.** Grepwork looks like a well-kept terminal built for
 developers: dark backdrop, monospace accents, sharp low-radius edges, and Hacker News's own
 signature orange as the single accent color that ties the product back to its source. It should
 feel fast, dense-but-legible, and unmistakably built _for_ the HN audience — not a generic SaaS
@@ -54,7 +54,7 @@ background.
 
 ## Signature detail
 
-The wordmark renders as `Hiring Signal_` with a CSS-animated block cursor (steps() blink,
+The wordmark renders as `Grepwork_` with a CSS-animated block cursor (steps() blink,
 so it looks like a real terminal caret, not a smooth fade) after "Signal." The search input
 carries a `$` prompt prefix instead of a magnifying-glass icon, reinforcing the terminal
 framing without relying on an icon font or SVG library.
