@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fetchThreadComments, findLatestHiringThreadId } from "../hn";
+import { fetchThreadComments, findLatestHiringThreadId, findRecentHiringThreads } from "../hn";
 
 function jsonResponse(body: unknown, ok = true, status = 200): Response {
   return {
@@ -46,6 +46,32 @@ describe("findLatestHiringThreadId", () => {
 
     await expect(findLatestHiringThreadId()).rejects.toThrow(/Algolia search failed after retry/);
     expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("findRecentHiringThreads", () => {
+  it("keeps only on-title matches and caps at the given limit", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      jsonResponse({
+        hits: [
+          { story_id: 1, title: "Ask HN: Who is hiring? (July 2026)", created_at: "2026-07-01" },
+          {
+            story_id: 2,
+            title: "Ask HN: Who wants to be hired? (July 2026)",
+            created_at: "2026-07-01",
+          },
+          { story_id: 3, title: "Ask HN: Who is hiring? (June 2026)", created_at: "2026-06-01" },
+          { story_id: 4, title: "Ask HN: Who is hiring? (May 2026)", created_at: "2026-05-01" },
+        ],
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const threads = await findRecentHiringThreads(2);
+    expect(threads).toEqual([
+      { storyId: 1, title: "Ask HN: Who is hiring? (July 2026)", createdAt: "2026-07-01" },
+      { storyId: 3, title: "Ask HN: Who is hiring? (June 2026)", createdAt: "2026-06-01" },
+    ]);
   });
 });
 
