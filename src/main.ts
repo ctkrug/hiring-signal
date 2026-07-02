@@ -1,9 +1,13 @@
 import { debounce } from "./lib/debounce";
+import { countTagFrequency } from "./lib/facets";
 import { EMPTY_FILTER_STATE, filterPostings } from "./lib/filter";
-import { renderPostingCard } from "./lib/postingCard";
+import { escapeHtml, renderPostingCard } from "./lib/postingCard";
 import { renderShell } from "./ui/shell";
 import type { FilterState } from "./lib/filter";
 import type { ThreadData, ThreadIndexEntry } from "./lib/types";
+
+const STACK_FACET_LIMIT = 16;
+const SENIORITY_FACET_LIMIT = 12;
 
 const app = document.querySelector<HTMLDivElement>("#app");
 if (!app) throw new Error("#app root element missing from index.html");
@@ -15,6 +19,8 @@ const searchInput = document.querySelector<HTMLInputElement>("#search-input")!;
 const statusEl = document.querySelector<HTMLParagraphElement>("#results-status")!;
 const resultsList = document.querySelector<HTMLDivElement>("#results-list")!;
 const remoteFilterEl = document.querySelector<HTMLDivElement>("#remote-filter")!;
+const stackFilterEl = document.querySelector<HTMLDivElement>("#stack-filter")!;
+const seniorityFilterEl = document.querySelector<HTMLDivElement>("#seniority-filter")!;
 
 const REMOTE_OPTIONS: Array<{ value: FilterState["remote"]; label: string }> = [
   { value: "all", label: "All" },
@@ -63,6 +69,8 @@ async function loadThread(storyId: number): Promise<void> {
     state.filters = { ...EMPTY_FILTER_STATE };
     searchInput.value = "";
     renderRemoteFilter();
+    renderFacetFilter(stackFilterEl, "stack", STACK_FACET_LIMIT);
+    renderFacetFilter(seniorityFilterEl, "seniority", SENIORITY_FACET_LIMIT);
     applyFilters();
   } catch (err) {
     const detail = err instanceof Error ? err.message : String(err);
@@ -102,6 +110,42 @@ remoteFilterEl.addEventListener("click", (event) => {
 });
 
 renderRemoteFilter();
+
+function renderFacetFilter(
+  container: HTMLElement,
+  key: "stack" | "seniority",
+  limit: number,
+): void {
+  const tags = state.active ? countTagFrequency(state.active.postings, key).slice(0, limit) : [];
+  container.innerHTML = tags
+    .map(
+      ({ tag, count }) => `
+        <button
+          type="button"
+          class="chip chip--toggle"
+          data-tag="${escapeHtml(tag)}"
+          aria-pressed="${state.filters[key].includes(tag)}"
+        >${escapeHtml(tag)} <span class="chip__count">${count}</span></button>
+      `,
+    )
+    .join("");
+}
+
+function wireFacetFilter(container: HTMLElement, key: "stack" | "seniority", limit: number): void {
+  container.addEventListener("click", (event) => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-tag]");
+    if (!button) return;
+    const tag = button.dataset.tag!;
+    const selected = state.filters[key];
+    const next = selected.includes(tag) ? selected.filter((t) => t !== tag) : [...selected, tag];
+    state.filters = { ...state.filters, [key]: next };
+    renderFacetFilter(container, key, limit);
+    applyFilters();
+  });
+}
+
+wireFacetFilter(stackFilterEl, "stack", STACK_FACET_LIMIT);
+wireFacetFilter(seniorityFilterEl, "seniority", SENIORITY_FACET_LIMIT);
 
 const handleSearchInput = debounce((query: string) => {
   state.filters = { ...state.filters, query };
