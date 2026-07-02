@@ -53,9 +53,10 @@ export function parseComment(comment: HNComment): JobPosting {
     remote: extractRemote(text),
     stack: extractStack(text),
     seniority: extractSeniority(text),
-    // No company means the opening line didn't follow the `Company | Location`
-    // convention at all — company/location are guesses at best, not facts.
-    unparsed: company === null,
+    // No location means no `|`/`–`/`—` separator was found at all, so the
+    // opening line didn't follow the `Company | Location` convention —
+    // `company` is just the whole first line truncated, not a real parse.
+    unparsed: location === null,
     raw: text,
   };
 }

@@ -28,6 +28,13 @@
       "text": "too short",
       "createdAt": "2026-07-01T14:10:00.000Z",
       "parentId": 40000000
+    },
+    {
+      "id": 40000005,
+      "author": "freeform_poster",
+      "text": "<p>We are hiring a bunch of engineers this quarter across several teams, come check out our careers page for more details on open roles and how to apply.",
+      "createdAt": "2026-07-01T14:15:00.000Z",
+      "parentId": 40000000
     }
   ]
 }
