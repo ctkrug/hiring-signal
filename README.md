@@ -14,6 +14,10 @@ extraction pass over each top-level comment to pull out structured facets — co
 remote/hybrid/onsite, tech stack, seniority — and serves the result as a fast, static, searchable
 board.
 
+![Job board desktop view: filter rail on the left, results grid on the right](docs/screenshots/desktop.png)
+
+<img src="docs/screenshots/mobile.png" alt="Job board mobile view: stacked filter groups above the results list" width="360" />
+
 ## Why this is interesting
 
 It's real (if lite) NLP over messy, inconsistent, human-written text: no two companies format
