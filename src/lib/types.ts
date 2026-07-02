@@ -17,6 +17,17 @@ export interface HiringThread {
   createdAt: string;
 }
 
+/** One entry in public/data/index.json — enough to populate the month picker. */
+export interface ThreadIndexEntry extends HiringThread {
+  monthLabel: string;
+  postingCount: number;
+}
+
+/** The full contents of public/data/<storyId>.json. */
+export interface ThreadData extends ThreadIndexEntry {
+  postings: JobPosting[];
+}
+
 /** A job posting extracted from one top-level "Who is hiring" comment. */
 export interface JobPosting {
   commentId: number;
