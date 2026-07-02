@@ -22,6 +22,20 @@ describe("extractStack", () => {
   it("returns an empty array when nothing matches", () => {
     expect(extractStack("We are hiring a marketing lead.")).toEqual([]);
   });
+
+  it("matches modern framework and infra keywords", () => {
+    const stack = extractStack(
+      "Our stack is Next.js, Tailwind CSS, and Kafka, deployed with SwiftUI on iOS.",
+    );
+    expect(stack).toEqual(
+      expect.arrayContaining(["Next.js", "Tailwind CSS", "Kafka", "SwiftUI", "iOS"]),
+    );
+  });
+
+  it("normalizes keyword aliases to the same canonical tag", () => {
+    expect(extractStack("Built with nextjs.")).toContain("Next.js");
+    expect(extractStack("Built with Next.js.")).toContain("Next.js");
+  });
 });
 
 describe("extractRemote", () => {
