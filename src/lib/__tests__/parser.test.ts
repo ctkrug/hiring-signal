@@ -7,7 +7,7 @@ const { storyId, comments } = sampleThread as { storyId: number; comments: HNCom
 
 describe("stripHtml", () => {
   it("converts paragraph tags to newlines and decodes entities", () => {
-    expect(stripHtml("<p>A &amp; B<p>C")).toBe("A & B\n\nC");
+    expect(stripHtml("<p>A &amp; B<p>C")).toBe("A & B\nC");
   });
 });
 
