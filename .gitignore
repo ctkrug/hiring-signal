@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+site/dist/
+
+# vite
+.vite/
+
+# test / coverage
+coverage/
+
+# logs
+*.log
+npm-debug.log*
+
+# env
+.env
+.env.local
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# fetched HN data cache (regenerated at build time)
+.cache/
