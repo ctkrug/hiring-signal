@@ -36,6 +36,12 @@ describe("extractStack", () => {
     expect(extractStack("Built with nextjs.")).toContain("Next.js");
     expect(extractStack("Built with Next.js.")).toContain("Next.js");
   });
+
+  it("matches keywords containing regex-special characters like . and #", () => {
+    expect(extractStack("We use C# and .NET Framework daily.")).toEqual(
+      expect.arrayContaining(["C#", ".NET"]),
+    );
+  });
 });
 
 describe("extractRemote", () => {
@@ -68,5 +74,9 @@ describe("extractSeniority", () => {
 
   it("returns an empty array when unstated", () => {
     expect(extractSeniority("Looking for an Engineer.")).toEqual([]);
+  });
+
+  it("matches the 'sr.' abbreviation despite its trailing period", () => {
+    expect(extractSeniority("Looking for a Sr. Backend Engineer.")).toEqual(["Senior"]);
   });
 });
