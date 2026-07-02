@@ -14,6 +14,14 @@ const monthPicker = document.querySelector<HTMLSelectElement>("#month-picker")!;
 const searchInput = document.querySelector<HTMLInputElement>("#search-input")!;
 const statusEl = document.querySelector<HTMLParagraphElement>("#results-status")!;
 const resultsList = document.querySelector<HTMLDivElement>("#results-list")!;
+const remoteFilterEl = document.querySelector<HTMLDivElement>("#remote-filter")!;
+
+const REMOTE_OPTIONS: Array<{ value: FilterState["remote"]; label: string }> = [
+  { value: "all", label: "All" },
+  { value: "remote", label: "Remote" },
+  { value: "hybrid", label: "Hybrid" },
+  { value: "onsite", label: "Onsite" },
+];
 
 interface AppState {
   index: ThreadIndexEntry[];
@@ -53,6 +61,8 @@ async function loadThread(storyId: number): Promise<void> {
     // Stack/seniority tags are specific to each month's thread, so a filter
     // selection from the previous month wouldn't map onto the new one.
     state.filters = { ...EMPTY_FILTER_STATE };
+    searchInput.value = "";
+    renderRemoteFilter();
     applyFilters();
   } catch (err) {
     const detail = err instanceof Error ? err.message : String(err);
@@ -69,6 +79,29 @@ function populateMonthPicker(index: ThreadIndexEntry[]): void {
 monthPicker.addEventListener("change", () => {
   void loadThread(Number(monthPicker.value));
 });
+
+function renderRemoteFilter(): void {
+  remoteFilterEl.innerHTML = REMOTE_OPTIONS.map(
+    ({ value, label }) => `
+      <button
+        type="button"
+        class="chip chip--toggle"
+        data-remote="${value}"
+        aria-pressed="${state.filters.remote === value}"
+      >${label}</button>
+    `,
+  ).join("");
+}
+
+remoteFilterEl.addEventListener("click", (event) => {
+  const button = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-remote]");
+  if (!button) return;
+  state.filters = { ...state.filters, remote: button.dataset.remote as FilterState["remote"] };
+  renderRemoteFilter();
+  applyFilters();
+});
+
+renderRemoteFilter();
 
 const handleSearchInput = debounce((query: string) => {
   state.filters = { ...state.filters, query };
