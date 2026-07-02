@@ -22,6 +22,12 @@ export function renderShell(): string {
             autocomplete="off"
           />
         </div>
+        <a
+          class="gh-link"
+          href="https://github.com/ctkrug/hiring-signal"
+          target="_blank"
+          rel="noopener"
+        >GitHub ↗</a>
       </div>
     </header>
     <div class="app-body">
