@@ -1,0 +1,33 @@
+{
+  "storyId": 40000000,
+  "comments": [
+    {
+      "id": 40000001,
+      "author": "acme_hr",
+      "text": "<p>Acme Robotics | Remote (US) | Full-time<p>We're a Series B robotics company building warehouse automation. Looking for a Senior Backend Engineer to work on our fleet coordination service.<p>Stack: TypeScript, Node.js, PostgreSQL, Kubernetes, AWS.<p>Remote-first, US timezones. $170k-$210k + equity.",
+      "createdAt": "2026-07-01T14:02:00.000Z",
+      "parentId": 40000000
+    },
+    {
+      "id": 40000002,
+      "author": "foundry_labs",
+      "text": "<p>Foundry Labs | San Francisco, CA | Onsite<p>Early-stage startup, in-office 4 days/week. Hiring a Junior Frontend Engineer to work on our React + GraphQL dashboard.<p>New grads welcome.",
+      "createdAt": "2026-07-01T14:05:00.000Z",
+      "parentId": 40000000
+    },
+    {
+      "id": 40000003,
+      "author": "some_commenter",
+      "text": "this is great, applied to acme!",
+      "createdAt": "2026-07-01T15:00:00.000Z",
+      "parentId": 40000001
+    },
+    {
+      "id": 40000004,
+      "author": "brief_poster",
+      "text": "too short",
+      "createdAt": "2026-07-01T14:10:00.000Z",
+      "parentId": 40000000
+    }
+  ]
+}
