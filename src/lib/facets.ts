@@ -10,10 +10,7 @@ export interface TagCount {
  * seniority arrays, sorted most-frequent first (ties broken alphabetically)
  * so the filter rail surfaces the most useful facet values first.
  */
-export function countTagFrequency(
-  postings: JobPosting[],
-  key: "stack" | "seniority",
-): TagCount[] {
+export function countTagFrequency(postings: JobPosting[], key: "stack" | "seniority"): TagCount[] {
   const counts = new Map<string, number>();
   for (const posting of postings) {
     for (const tag of posting[key]) {
