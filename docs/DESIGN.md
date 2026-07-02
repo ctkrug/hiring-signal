@@ -43,8 +43,10 @@ tags as mono chips, and a one-line excerpt, expandable to the full text.
 
 - **1440×900 desktop:** header row (64px) → filter rail (left, sticky) + results (right, fills
   remaining viewport height, scrollable).
-- **390×844 phone:** header stacks to two rows (wordmark+search, then month picker) → filter
-  chips scroll horizontally → results stack full-width, one card per row.
+- **390×844 phone:** header stacks to three rows (wordmark, then month picker, then search) →
+  filter rail stacks Remote/Stack/Seniority as separate titled rows, each with its own
+  horizontally-scrolling chip strip (so every group stays visible — no group scrolls fully
+  off-screen behind another) → results stack full-width, one card per row.
 
 No dead space: the results column always fills its container height (min-height: 65vh) even
 when a filtered set is short — an empty state fills that space instead of leaving blank
