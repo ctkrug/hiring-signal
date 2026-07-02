@@ -1,6 +1,8 @@
+import { EMPTY_FILTER_STATE, filterPostings } from "./lib/filter";
 import { renderPostingCard } from "./lib/postingCard";
 import { renderShell } from "./ui/shell";
-import type { JobPosting, ThreadData, ThreadIndexEntry } from "./lib/types";
+import type { FilterState } from "./lib/filter";
+import type { ThreadData, ThreadIndexEntry } from "./lib/types";
 
 const app = document.querySelector<HTMLDivElement>("#app");
 if (!app) throw new Error("#app root element missing from index.html");
@@ -14,16 +16,26 @@ const resultsList = document.querySelector<HTMLDivElement>("#results-list")!;
 interface AppState {
   index: ThreadIndexEntry[];
   active: ThreadData | null;
+  filters: FilterState;
 }
 
-const state: AppState = { index: [], active: null };
+const state: AppState = { index: [], active: null, filters: { ...EMPTY_FILTER_STATE } };
 
 function setStatus(message: string): void {
   statusEl.textContent = message;
 }
 
-function renderBoard(postings: JobPosting[]): void {
-  resultsList.innerHTML = postings.map(renderPostingCard).join("");
+function applyFilters(): void {
+  if (!state.active) return;
+  const filtered = filterPostings(state.active.postings, state.filters);
+
+  resultsList.innerHTML = filtered.length
+    ? filtered.map(renderPostingCard).join("")
+    : `<p class="results__empty">&gt; no postings match your filters_</p>`;
+
+  setStatus(
+    `> showing ${filtered.length} of ${state.active.postingCount} postings for ${state.active.monthLabel}_`,
+  );
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
@@ -36,8 +48,10 @@ async function loadThread(storyId: number): Promise<void> {
   setStatus(`> loading postings…_`);
   try {
     state.active = await fetchJson<ThreadData>(`./data/${storyId}.json`);
-    setStatus(`> ${state.active.postingCount} postings loaded for ${state.active.monthLabel}_`);
-    renderBoard(state.active.postings);
+    // Stack/seniority tags are specific to each month's thread, so a filter
+    // selection from the previous month wouldn't map onto the new one.
+    state.filters = { ...EMPTY_FILTER_STATE };
+    applyFilters();
   } catch (err) {
     const detail = err instanceof Error ? err.message : String(err);
     setStatus(`> failed to load this month's postings: ${detail}_`);
