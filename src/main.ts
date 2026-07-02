@@ -1,3 +1,4 @@
+import { debounce } from "./lib/debounce";
 import { EMPTY_FILTER_STATE, filterPostings } from "./lib/filter";
 import { renderPostingCard } from "./lib/postingCard";
 import { renderShell } from "./ui/shell";
@@ -10,6 +11,7 @@ if (!app) throw new Error("#app root element missing from index.html");
 app.innerHTML = renderShell();
 
 const monthPicker = document.querySelector<HTMLSelectElement>("#month-picker")!;
+const searchInput = document.querySelector<HTMLInputElement>("#search-input")!;
 const statusEl = document.querySelector<HTMLParagraphElement>("#results-status")!;
 const resultsList = document.querySelector<HTMLDivElement>("#results-list")!;
 
@@ -66,6 +68,15 @@ function populateMonthPicker(index: ThreadIndexEntry[]): void {
 
 monthPicker.addEventListener("change", () => {
   void loadThread(Number(monthPicker.value));
+});
+
+const handleSearchInput = debounce((query: string) => {
+  state.filters = { ...state.filters, query };
+  applyFilters();
+}, 200);
+
+searchInput.addEventListener("input", () => {
+  handleSearchInput(searchInput.value);
 });
 
 async function init(): Promise<void> {
