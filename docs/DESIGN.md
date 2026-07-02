@@ -5,28 +5,28 @@
 **Terminal-mono, HN-flavored.** Hiring Signal looks like a well-kept terminal built for
 developers: dark backdrop, monospace accents, sharp low-radius edges, and Hacker News's own
 signature orange as the single accent color that ties the product back to its source. It should
-feel fast, dense-but-legible, and unmistakably built *for* the HN audience — not a generic SaaS
+feel fast, dense-but-legible, and unmistakably built _for_ the HN audience — not a generic SaaS
 dashboard that happens to show job listings.
 
 ## Tokens
 
-| Token | Value | Use |
-|---|---|---|
-| `--bg` | `#0d1117` | page background |
-| `--surface-1` | `#151b23` | cards, panel backgrounds |
-| `--surface-2` | `#1c232c` | raised elements (inputs, chips, hovered rows) |
-| `--text` | `#e6edf3` | primary text |
-| `--text-muted` | `#8b949e` | secondary text, metadata |
-| `--accent` | `#ff6600` | HN orange — primary actions, active filters, wordmark |
-| `--accent-support` | `#58a6ff` | links, secondary interactive accents |
-| `--success` | `#3fb950` | remote badge, positive states |
-| `--danger` | `#f85149` | error state |
-| Display font | **JetBrains Mono** (700) | wordmark, headings — system fallback `ui-monospace, monospace` |
-| UI font | **Inter** | body copy, listings, controls — system fallback `system-ui, sans-serif` |
-| Spacing unit | 8px scale (4/8/16/24/32/48) | all padding/margin/gap |
-| Corner radius | 6px | terminal-window feel — sharp but not brutalist |
-| Shadow/glow | `0 0 0 1px var(--surface-2)` resting, `0 0 0 2px var(--accent)` + soft amber glow on focus | cards, focus rings |
-| Motion | UI transitions 150ms ease-out; hover/press 120ms ease-out | never longer than 250ms |
+| Token              | Value                                                                                      | Use                                                                     |
+| ------------------ | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| `--bg`             | `#0d1117`                                                                                  | page background                                                         |
+| `--surface-1`      | `#151b23`                                                                                  | cards, panel backgrounds                                                |
+| `--surface-2`      | `#1c232c`                                                                                  | raised elements (inputs, chips, hovered rows)                           |
+| `--text`           | `#e6edf3`                                                                                  | primary text                                                            |
+| `--text-muted`     | `#8b949e`                                                                                  | secondary text, metadata                                                |
+| `--accent`         | `#ff6600`                                                                                  | HN orange — primary actions, active filters, wordmark                   |
+| `--accent-support` | `#58a6ff`                                                                                  | links, secondary interactive accents                                    |
+| `--success`        | `#3fb950`                                                                                  | remote badge, positive states                                           |
+| `--danger`         | `#f85149`                                                                                  | error state                                                             |
+| Display font       | **JetBrains Mono** (700)                                                                   | wordmark, headings — system fallback `ui-monospace, monospace`          |
+| UI font            | **Inter**                                                                                  | body copy, listings, controls — system fallback `system-ui, sans-serif` |
+| Spacing unit       | 8px scale (4/8/16/24/32/48)                                                                | all padding/margin/gap                                                  |
+| Corner radius      | 6px                                                                                        | terminal-window feel — sharp but not brutalist                          |
+| Shadow/glow        | `0 0 0 1px var(--surface-2)` resting, `0 0 0 2px var(--accent)` + soft amber glow on focus | cards, focus rings                                                      |
+| Motion             | UI transitions 150ms ease-out; hover/press 120ms ease-out                                  | never longer than 250ms                                                 |
 
 Not pure black/white: `--bg` is `#0d1117`, not `#000`, and `--text` is `#e6edf3`, not `#fff` —
 avoids the flat/generic look pure extremes give.
