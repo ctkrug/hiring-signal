@@ -9,6 +9,11 @@ describe("stripHtml", () => {
   it("converts paragraph tags to newlines and decodes entities", () => {
     expect(stripHtml("<p>A &amp; B<p>C")).toBe("A & B\nC");
   });
+
+  it("decodes numeric HTML entities HN uses for slashes and punctuation", () => {
+    expect(stripHtml("Contract &#x2F; Part-time")).toBe("Contract / Part-time");
+    expect(stripHtml("It&#x27;s &#8212; great")).toBe("It's — great");
+  });
 });
 
 describe("isTopLevelJobPost", () => {
